@@ -38,7 +38,7 @@ find_opt_clus <- function(x, min.nc=2, max.nc, ncores=2, method="kmeans",
     m <- t(x)
     if (runPCA) {
         pr <- prcomp(m)
-        m <- pr$x[,1:comp]
+        m <- pr$x[, 1:comp]
     }
     help <- function(ind) {
         print(paste0("Working on index ", ind))
