@@ -26,7 +26,7 @@
 #   [2] https://cran.r-project.org/web/packages/NbClust
 
 find_opt_clus <- function(x, min.nc=2, max.nc, ncores=2, method="kmeans",
-                             runPCA=FALSE, comp=50, gene.targets=NULL) {
+                          runPCA=FALSE, comp=50, gene.targets=NULL) {
     if (!require("NbClust")) install.packages("NbClust")
     if (!require("parallel")) install.packages("parallel")
     if (missing(x)) stop("Input data is missing.")
@@ -39,7 +39,7 @@ find_opt_clus <- function(x, min.nc=2, max.nc, ncores=2, method="kmeans",
                 "tau", "dunn", "hubert", "sdindex", "dindex", "sdbw")
     m <- t(x)
     if (!is.null(gene.targets)) {
-        m<-m[,colnames(m)%in%gene.targets]
+        m<-m[, colnames(m)%in%gene.targets]
     }
     if (runPCA) {
         pr <- prcomp(m)
