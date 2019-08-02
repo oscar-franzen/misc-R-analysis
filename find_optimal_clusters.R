@@ -10,6 +10,9 @@
 #   ncores = number of cores to use (one core per index)
 #   method = the clustering method to evaluate, kmeans as default
 #   runPCA = run principal component analysis on the data before the test
+#   comp = number of PCA components to use
+#   gene.targets = optional vector of gene names to target
+#
 #
 # Example:
 #   ret <- find_opt_clus(x, min.nc=2, max.nc=10, ncores=30)
@@ -26,7 +29,7 @@ if (!require("NbClust")) install.packages("NbClust")
 if (!require("parallel")) install.packages("parallel")
 
 find_opt_clus <- function(x, min.nc=2, max.nc, ncores=2, method="kmeans",
-                             runPCA=FALSE, comp=50) {
+                             runPCA=FALSE, comp=50, gene.targets=NULL) {
     if (missing(x)) stop("Input data is missing.")
     if (missing(max.nc)) stop("Maximum number of clusters (max.nc) must be specified.")
     
@@ -36,6 +39,9 @@ find_opt_clus <- function(x, min.nc=2, max.nc, ncores=2, method="kmeans",
                 "ptbiserial", "gap", "frey", "mcclain", "gamma", "gplus",
                 "tau", "dunn", "hubert", "sdindex", "dindex", "sdbw")
     m <- t(x)
+    if (!is.null(gene.targets)) {
+        m<-m[,colnames(m)%in%gene.targets]
+    }
     if (runPCA) {
         pr <- prcomp(m)
         m <- pr$x[, 1:comp]
