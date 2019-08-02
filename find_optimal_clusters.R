@@ -25,11 +25,10 @@
 #       http://www.jstatsoft.org/v61/i06/
 #   [2] https://cran.r-project.org/web/packages/NbClust
 
-if (!require("NbClust")) install.packages("NbClust")
-if (!require("parallel")) install.packages("parallel")
-
 find_opt_clus <- function(x, min.nc=2, max.nc, ncores=2, method="kmeans",
                              runPCA=FALSE, comp=50, gene.targets=NULL) {
+    if (!require("NbClust")) install.packages("NbClust")
+    if (!require("parallel")) install.packages("parallel")
     if (missing(x)) stop("Input data is missing.")
     if (missing(max.nc)) stop("Maximum number of clusters (max.nc) must be specified.")
     
